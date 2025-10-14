@@ -14,6 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.register = register;
 exports.login = login;
+exports.findAllUsers = findAllUsers;
+exports.findUserById = findUserById;
+exports.modifyUser = modifyUser;
+exports.removeUser = removeUser;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const config_1 = require("../config");
 const UserDao_1 = __importDefault(require("../daos/UserDao"));
@@ -48,6 +52,56 @@ function login(credentials) {
                     throw new LibraryErrors_1.InvalidUsernameOrPasswordError("Invalid username or password");
                 }
             }
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function findAllUsers() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const users = yield UserDao_1.default.find();
+            return users;
+        }
+        catch (error) {
+            return [];
+        }
+    });
+}
+function findUserById(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const user = yield UserDao_1.default.findById(userId);
+            if (user)
+                return user;
+            throw new LibraryErrors_1.UserDoesNotExistError("User does not exist with this ID");
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+function modifyUser(user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let id = yield UserDao_1.default.findByIdAndUpdate(user._id, user, { new: true });
+            if (!id)
+                throw new LibraryErrors_1.UserDoesNotExistError("User does not exist with this ID");
+            return user;
+        }
+        catch (error) {
+            throw new error();
+        }
+    });
+}
+function removeUser(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let deleted = yield UserDao_1.default.findByIdAndDelete(userId);
+            if (!deleted)
+                throw new LibraryErrors_1.UserDoesNotExistError("User does not exist with this ID");
+            return "User deleted Successfully";
         }
         catch (error) {
             throw error;

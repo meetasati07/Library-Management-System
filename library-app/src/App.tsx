@@ -1,23 +1,29 @@
 import {useEffect, useState } from "react"
-import HomePage from "./pages/HomePage/HomePage"
-import type { User } from "./models/User";
+import { useSelector } from "react-redux";
+import { RootState } from './redux/ReduxStore';
+import HomePage from "./pages/HomePage/HomePage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LayoutPage from "./pages/LayoutPage/LayoutPage";
 
 function App() {
-  const [displayLogin, setDisplayLogin] = useState<boolean>(true);
-  const [loggedInUser, setLoggedInUser] = useState<User>();
 
-  const updateLoggedInUser = (user:User) => {
-    setLoggedInUser(user);
-  }
+  const loggedInUser = useSelector((state:RootState) => state.authentication.loggedInUser)
 
   useEffect(()=>{
     console.log(loggedInUser )
   }, [loggedInUser])
 
   return (
-    <div>
-      <HomePage displayLogin={displayLogin} updateLoggedInUser={updateLoggedInUser}/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LayoutPage />}>
+          <Route path="" element={<HomePage />}/>
+          <Route path="/catalog" element={<>Catalog</>}/>
+          <Route path="/resourses/:barcode" element={<>Resourse</>}/>
+          <Route path="/profile/:userId" element={<>User Profile</>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
    
 }

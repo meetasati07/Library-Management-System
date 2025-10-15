@@ -16,6 +16,8 @@ exports.findAllBooks = findAllBooks;
 exports.modifyBook = modifyBook;
 exports.registerBook = registerBook;
 exports.removeBook = removeBook;
+exports.queryBooks = queryBooks;
+exports.paginateBooks = paginateBooks;
 const BookDao_1 = __importDefault(require("../daos/BookDao"));
 const LibraryErrors_1 = require("../utils/LibraryErrors");
 function findAllBooks() {
@@ -56,4 +58,65 @@ function removeBook(barcode) {
             throw error;
         }
     });
+}
+function queryBooks(page, limit, title, barcode, description, author, subject, genre) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let books = yield BookDao_1.default.find();
+        let filteredBooks = [];
+        books.forEach((book) => {
+            if (barcode) {
+                if (book.barcode.toLowerCase().includes(barcode.toLowerCase()) && !filteredBooks.some(b => b['barcode'] === book.barcode)) {
+                    filteredBooks.push(book);
+                }
+            }
+            if (title) {
+                if (book.title.toLowerCase().includes(title.toLowerCase()) && !filteredBooks.some(b => b['barcode'] === book.barcode)) {
+                    filteredBooks.push(book);
+                }
+            }
+            if (description) {
+                if (book.description.toLowerCase().includes(description.toLowerCase()) && !filteredBooks.some(b => b['barcode'] === book.barcode)) {
+                    filteredBooks.push(book);
+                }
+            }
+            if (author) {
+                if (book.authors.some(a => a.toLowerCase().includes(author.toLowerCase()) && !filteredBooks.some(b => b['barcode'] === book.barcode))) {
+                    filteredBooks.push(book);
+                }
+            }
+            if (subject) {
+                if (book.subjects.some(s => s.toLowerCase().includes(subject.toLowerCase()) && !filteredBooks.some(b => b['barcode'] === book.barcode))) {
+                    filteredBooks.push(book);
+                }
+            }
+            if (genre) {
+                if (book.genre.toLowerCase().includes(genre.toLowerCase()) && !filteredBooks.some(b => b['barcode'] === book.barcode)) {
+                    filteredBooks.push(book);
+                }
+            }
+        });
+        return paginateBooks(filteredBooks, page, limit);
+    });
+}
+function paginateBooks(books, page, limit) {
+    let pageBooks = [];
+    const pages = Math.ceil(books.length / Number(limit));
+    if (Number(page) === pages) {
+        const startPoint = (Number(page) - 1) * Number(limit);
+        pageBooks = books.slice(startPoint);
+    }
+    else {
+        const startPoint = (Number(page) - 1) * Number(limit);
+        const endPoint = startPoint + Number(limit);
+        pageBooks = books.slice(startPoint, endPoint);
+    }
+    const pageObject = {
+        totalCount: books.length,
+        currentPage: Number(page),
+        totalPages: pages,
+        limit: Number(limit),
+        pageCount: pageBooks.length,
+        items: pageBooks
+    };
+    return pageObject;
 }

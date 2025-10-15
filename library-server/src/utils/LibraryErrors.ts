@@ -15,5 +15,11 @@ export class InvalidUsernameOrPasswordError extends Error {
 export class UserDoesNotExistError extends Error {
   constructor(message: string) {
     super(message);
-  } 
+  }
+}
+
+export class BookDoesNotExistError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
 }

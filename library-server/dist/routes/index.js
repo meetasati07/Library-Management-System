@@ -6,10 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerRoutes = registerRoutes;
 const AuthRoutes_1 = __importDefault(require("./AuthRoutes"));
 const UserRoutes_1 = __importDefault(require("./UserRoutes"));
+const BookRoutes_1 = __importDefault(require("./BookRoutes"));
 function registerRoutes(app) {
     app.get("/health", (req, res) => {
         res.status(200).json({ message: "Server is Running" });
     });
     app.use("/auth", AuthRoutes_1.default);
     app.use("/users", UserRoutes_1.default);
+    app.use("/book", BookRoutes_1.default);
 }

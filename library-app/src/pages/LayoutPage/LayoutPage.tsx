@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import './LayoutPage.css'
 import { RootState } from "../../redux/ReduxStore";
 import { LoginRegisterModal } from "../../features/authentication";
+import { Footer, Navbar } from "../../features/navigation";
 
 
 export default function LayoutPage(){
@@ -13,9 +14,9 @@ export default function LayoutPage(){
     return(
         <div className="layout-page">
             {state.displayLogin && <LoginRegisterModal />}
-            <h1>NAV BAR</h1>
+            <Navbar />
             <Outlet />
-            <h1>FOOTER</h1>
+            <Footer />
         </div>
     )
-}
+} 

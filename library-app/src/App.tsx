@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./redux/ReduxStore";
 import HomePage from "./pages/HomePage/HomePage";
@@ -7,6 +7,7 @@ import LayoutPage from "./pages/LayoutPage/LayoutPage";
 import { fetchUser } from "./redux/slices/AuthenticationSlice";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import CatalogPage from "./pages/CatalogPage/CatalogPage";
+import ResoursePage from "./pages/ResoursePage/ResoursePage";
 
 function App() {
   const loggedInUser = useSelector(
@@ -33,7 +34,7 @@ function App() {
         <Route path="/" element={<LayoutPage />}>
           <Route path="" element={<HomePage />} />
           <Route path="/catalog" element={<CatalogPage />} />
-          <Route path="/resourses/:barcode" element={<>Resourse</>} />
+          <Route path="/resource/:barcode" element={<ResoursePage />} />
           <Route path="/profile/:userId" element={<ProfilePage />} />
         </Route>
       </Routes>

@@ -38,7 +38,7 @@ export const BookCard:React.FC<BookCardProps> = ({book}) => {
     const navigate = useNavigate()
 
     const displayBook = () => {
-        navigate(`/resourse/${book.barcode}`)
+        navigate(`/resource/${book.barcode}`)
     }
 
     useEffect(() => {

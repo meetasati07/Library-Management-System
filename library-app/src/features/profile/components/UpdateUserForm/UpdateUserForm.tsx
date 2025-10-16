@@ -15,7 +15,7 @@ export const UpdateUserForm: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const [displayUpdate, setDisplayUpdate] = useState<boolean>(false);
-  const [user, setUser] = useState<User | undefined>(userState.profileUser);
+  const [user, setUser] = useState<User | undefined>();
 
   const navigate = useNavigate();
 
@@ -44,10 +44,10 @@ export const UpdateUserForm: React.FC = () => {
   }
 
   useEffect(() => {
-    if(!user){
-        setUser(userState.profileUser)
+    if(userState.profileUser){
+        setUser(JSON.parse(JSON.stringify(userState.profileUser)))
     }
-  }, [userState.profileUser, user])
+  }, [userState.profileUser?._id])
 
   return (
     <form className="update-user-form">

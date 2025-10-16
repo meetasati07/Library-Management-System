@@ -7,6 +7,7 @@ import axios from "axios";
 interface AuthenticationsSliceState {
   loggedInUser: User | undefined;
   profileUser: User | undefined;
+  libraryCard: string;
   loading: boolean;
   error: boolean;
   registerSuccess: boolean;
@@ -15,6 +16,7 @@ interface AuthenticationsSliceState {
 const initialState: AuthenticationsSliceState = {
   loggedInUser: undefined,
   profileUser: undefined,
+  libraryCard: "",
   loading: false,
   error: false,
   registerSuccess: false,
@@ -81,6 +83,19 @@ export const updateUser = createAsyncThunk(
   }
 )
 
+export const getLibraryCard = createAsyncThunk(
+  'auth/librarycard',
+  async (userId:string, thunkAPI) => {
+    try{
+      const req = await axios.post('http://localhost:8000/card/', {user:userId})
+
+      return req.data.libraryCard
+    } catch(e){
+      return thunkAPI.rejectWithValue(e)
+    }
+  }
+)
+
 export const AuthenticationsSlice = createSlice({
   name: "authentication",
   initialState,
@@ -143,6 +158,16 @@ export const AuthenticationsSlice = createSlice({
       return state;
     })
 
+    builder.addCase(getLibraryCard .pending, (state, action) => {
+      state = {
+        ...state,
+        error: false,
+        loading: true
+      }
+
+      return state;
+    })
+
     //Resolved logic
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state = {
@@ -180,6 +205,16 @@ export const AuthenticationsSlice = createSlice({
         loggedInUser: action.payload,
         profileUser: action.payload,
         loading: false
+      }
+
+      return state;
+    })
+
+    builder.addCase(getLibraryCard.fulfilled, (state, action) => {
+      state = {
+        ...state,
+        loading: false,
+        libraryCard: action.payload._id
       }
 
       return state;

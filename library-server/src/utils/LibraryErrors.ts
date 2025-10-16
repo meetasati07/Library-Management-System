@@ -29,3 +29,9 @@ export class LibraryCardDoesNotExistError extends Error {
     super(message);
   }
 }
+
+export class LoanRecordDoesNotExistError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}

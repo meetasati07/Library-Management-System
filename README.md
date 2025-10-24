@@ -117,7 +117,7 @@ MONGO_PASSWORD=YOUR_MONGODB_PASSWORD
 Install dependencies:
 
 npm install
-# or
+#or
 npm i
 
 
@@ -135,7 +135,7 @@ cd frontend
 Install dependencies:
 
 npm install
-# or
+#or
 npm i
 
 

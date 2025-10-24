@@ -9,6 +9,7 @@ Backend: Express.js + Node.js + TypeScript
 Database: MongoDB (Mongoose ODM)
 
 📁 Project Structure
+
 Library-Management-System/
 ├── library-app/
 │   ├── public/

@@ -11,20 +11,35 @@ Database: MongoDB (Mongoose ODM)
 📁 Project Structure
 
 Library-Management-System/
+
 ├── library-app/
+
 │   ├── public/
+
 │   └── src/
+
 │       ├── assets/
+
 │       ├── components/
+
 │       │   └── Modal/
+
 │       ├── features/
+
 │       │   ├── authentication/
+
 │       │   │   └── components/
+
 │       │   │       ├── LibraryCardModal/
+
 │       │   │       ├── LoginForm/
+
 │       │   │       ├── LoginRegisterModal/
+
 │       │   │       ├── RegisterForm/
+
 │       │   │       └── RegisterLibraryCardForm/
+
 │       │   ├── book/
 │       │   │   ├── components/
 │       │   │   │   ├── BookAdditionalInfo/
